@@ -1,5 +1,11 @@
 import { router } from 'expo-router';
-import { Text, View, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  useColorScheme,
+  Pressable,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSession } from '../ctx/useSession';
 
@@ -9,7 +15,9 @@ export default function SignIn() {
   const isDark = colorScheme === 'dark';
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}
+    >
       <View style={styles.content}>
         <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
           Welcome Back! 👋
@@ -17,8 +25,8 @@ export default function SignIn() {
         <Text style={[styles.subtitle, { color: isDark ? '#ccc' : '#666' }]}>
           Sign in to access your account
         </Text>
-        
-        <TouchableOpacity 
+
+        <Pressable
           style={[styles.signInButton, { backgroundColor: '#007AFF' }]}
           onPress={() => {
             signIn();
@@ -27,13 +35,12 @@ export default function SignIn() {
             router.dismiss();
           }}
         >
-          <Text style={styles.buttonText}>
-            Sign In
-          </Text>
-        </TouchableOpacity>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </Pressable>
 
         <Text style={[styles.note, { color: isDark ? '#888' : '#999' }]}>
-          This is a demo sign-in. In a real app, you would implement proper authentication.
+          This is a demo sign-in. In a real app, you would implement proper
+          authentication.
         </Text>
       </View>
     </SafeAreaView>
