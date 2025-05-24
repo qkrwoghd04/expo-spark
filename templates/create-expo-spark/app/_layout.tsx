@@ -1,28 +1,33 @@
-import { useEffect, useState, useCallback } from "react";
-import { View } from "react-native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "react-native";
-import Entypo from '@expo/vector-icons/Entypo';
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from 'react';
+import { Stack } from 'expo-router';
+import { SessionProvider, useSession } from '@/ctx';
+import { SplashScreenController } from '@/splash';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { Entypo } from '@expo/vector-icons';
 
-// 모든 리소스가 로드되기 전에 스플래시 화면을 숨김
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const [appIsReady, setAppIsReady] = useState(false);
-  const colorScheme = useColorScheme();
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+});
 
-  // 폰트 및 리소스 로딩
+export default function Root() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
   useEffect(() => {
     async function prepare() {
       try {
+        // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync(Entypo.font);
-        await new Promise(resolve => setTimeout(resolve, 1000)); // optional delay
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Remove this if you copy and paste the code!
+        await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
+        // Tell the application to render
         setAppIsReady(true);
       }
     }
@@ -30,23 +35,37 @@ export default function RootLayout() {
     prepare();
   }, []);
 
-  // 뷰가 실제 렌더링된 후 splash를 숨김
-  const onLayoutRootView = useCallback(() => {
-    if (appIsReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
+  if(!appIsReady) {
     return null;
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-    </View>
+    <SessionProvider>
+      <SplashScreenController />
+      <RootNavigator />
+    </SessionProvider>
   );
+}
+
+function RootNavigator() {
+  const { session } = useSession();
+
+  return(
+    <Stack>
+      <Stack.Protected guard={!!session}>
+        <Stack.Screen name="(app)" options={{ headerShown: false }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!session}>
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            headerShown: false,
+            presentation: 'modal',
+            title: 'Sign In',
+          }}
+        />
+      </Stack.Protected>
+    </Stack>
+  )
 }

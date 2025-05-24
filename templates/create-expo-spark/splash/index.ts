@@ -1,0 +1,1 @@
+export { SplashScreenController } from './SplashScreenController';
