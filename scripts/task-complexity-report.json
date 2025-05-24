@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "generatedAt": "2025-05-24T05:57:08.780Z",
+    "tasksAnalyzed": 25,
+    "thresholdScore": 6,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 1,
+      "taskTitle": "Set up CLI package structure",
+      "complexityScore": 4,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down the CLI package structure setup into subtasks such as initializing the npm package, configuring package.json, creating each directory, setting up the entry point script, making the bin file executable, and adding dev dependencies.",
+      "reasoning": "This task involves several discrete setup steps that are mostly procedural but foundational. Each step is straightforward but important for maintainability and best practices."
+    },
+    {
+      "taskId": 2,
+      "taskTitle": "Implement CLI argument parsing",
+      "complexityScore": 5,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand this task into subtasks for integrating the argument parsing library, handling project name input, implementing interactive prompts, validating input, managing help text, and error handling.",
+      "reasoning": "Argument parsing is a common CLI feature but requires careful handling of user input, validation, and error scenarios, making it moderately complex."
+    },
+    {
+      "taskId": 3,
+      "taskTitle": "Create template copying mechanism",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "List subtasks for file operations, placeholder replacement, path resolution, progress tracking, error handling, binary file handling, and utility creation for template processing.",
+      "reasoning": "Copying templates with variable substitution and binary file handling introduces complexity, especially with error handling and ensuring data integrity."
+    },
+    {
+      "taskId": 4,
+      "taskTitle": "Implement dependency installation",
+      "complexityScore": 6,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Divide into subtasks for package manager detection, process spawning, progress indication, error handling, timeout/retry logic, validation, and skip option implementation.",
+      "reasoning": "Automating dependency installation across multiple package managers with robust error handling and user options is moderately complex."
+    },
+    {
+      "taskId": 5,
+      "taskTitle": "Create success/error message handling",
+      "complexityScore": 4,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down into subtasks for colored output, success message formatting, next steps instructions, error formatting, troubleshooting suggestions, and documentation links.",
+      "reasoning": "Message formatting and user guidance are important for UX but are mostly straightforward to implement with existing libraries."
+    },
+    {
+      "taskId": 6,
+      "taskTitle": "Set up basic Expo template structure",
+      "complexityScore": 5,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand into subtasks for creating each directory, configuring app.json, setting up package.json, TypeScript config, .gitignore, and entry point files.",
+      "reasoning": "Setting up a project template is procedural but requires attention to detail to ensure all files and configs are correct."
+    },
+    {
+      "taskId": 7,
+      "taskTitle": "Implement Expo Router configuration",
+      "complexityScore": 7,
+      "recommendedSubtasks": 9,
+      "expansionPrompt": "List subtasks for installing dependencies, creating layout components, setting up entry points, implementing navigation, guards, and type definitions.",
+      "reasoning": "Configuring a file-based router with authentication guards and multiple layouts involves several interconnected components and logic."
+    },
+    {
+      "taskId": 8,
+      "taskTitle": "Implement authentication state management with Zustand",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for installing Zustand, creating the store, defining state and actions, adding persistence, utilities, and type definitions.",
+      "reasoning": "State management with persistence and type safety is moderately complex, especially when handling authentication flows."
+    },
+    {
+      "taskId": 9,
+      "taskTitle": "Implement SecureStore integration for token storage",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for installing SecureStore, creating wrapper utilities, implementing store/retrieve/delete functions, error handling, and fallback mechanisms.",
+      "reasoning": "Secure token storage with cross-platform support and error handling adds significant complexity and security considerations."
+    },
+    {
+      "taskId": 10,
+      "taskTitle": "Create login screen UI",
+      "complexityScore": 6,
+      "recommendedSubtasks": 9,
+      "expansionPrompt": "List subtasks for creating the login form, implementing validation, connecting to auth store, handling loading and errors, navigation, and styling.",
+      "reasoning": "Building a functional and user-friendly login UI with validation, state management, and navigation requires careful integration."
+    },
+    {
+      "taskId": 11,
+      "taskTitle": "Implement theme system with dark mode support",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating color palettes, theme hooks, context, store for preferences, utility functions, and ensuring theme-aware styling.",
+      "reasoning": "A robust theming system with dark mode and user preferences involves multiple layers of configuration and integration."
+    },
+    {
+      "taskId": 12,
+      "taskTitle": "Implement tab navigation UI",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for configuring tab navigation, icons, styling, accessibility, options, badges, and behavior testing.",
+      "reasoning": "Tab navigation with theming, accessibility, and custom options requires careful setup and testing."
+    },
+    {
+      "taskId": 13,
+      "taskTitle": "Create Home screen UI",
+      "complexityScore": 5,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "List subtasks for creating the Home screen, implementing UI sections, authentication state display, theme-aware styling, scroll/refresh, and navigation.",
+      "reasoning": "The Home screen is central but mostly involves UI composition and state display, which are standard tasks."
+    },
+    {
+      "taskId": 14,
+      "taskTitle": "Create Settings screen UI",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating the settings UI, theme toggle, logout, version display, grouping, styling, and connecting to auth store.",
+      "reasoning": "Settings screens often involve multiple interactive elements and integration with state management."
+    },
+    {
+      "taskId": 15,
+      "taskTitle": "Implement loading and error UI components",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for creating loading and error components, implementing indicators, retry logic, animations, notifications, error boundaries, and accessibility.",
+      "reasoning": "Reusable UI components for loading and errors require thoughtful design for flexibility, accessibility, and integration."
+    },
+    {
+      "taskId": 16,
+      "taskTitle": "Set up ESLint and Prettier configuration",
+      "complexityScore": 4,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "List subtasks for installing dependencies, creating config files, setting up TypeScript and React rules, npm scripts, editor integration, and pre-commit hooks.",
+      "reasoning": "Linting and formatting setup is procedural but involves several configuration files and integration points."
+    },
+    {
+      "taskId": 17,
+      "taskTitle": "Implement authentication flow logic",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating auth utilities, implementing login/logout flows, token management, auto-login, protected routes, and error handling.",
+      "reasoning": "Authentication flow logic is complex due to security, state management, and integration with UI and storage."
+    },
+    {
+      "taskId": 18,
+      "taskTitle": "Create custom hooks for common functionality",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for implementing each custom hook (auth, theme, loading, error, form, app state, secure store) and adding type definitions.",
+      "reasoning": "Reusable hooks require careful design for API consistency, type safety, and edge case handling."
+    },
+    {
+      "taskId": 19,
+      "taskTitle": "Implement app initialization logic",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "List subtasks for creating initialization logic, loading state, token retrieval, auth restoration, navigation, error handling, splash screen, and retry logic.",
+      "reasoning": "App initialization involves orchestrating multiple async operations, state restoration, and error handling, making it complex."
+    },
+    {
+      "taskId": 20,
+      "taskTitle": "Create error boundary implementation",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating error boundary components, error catching, retry logic, logging, fallback UI, reporting, context-specific boundaries, and recovery strategies.",
+      "reasoning": "Error boundaries require robust error handling, user feedback, and recovery mechanisms across the app."
+    },
+    {
+      "taskId": 21,
+      "taskTitle": "Implement module structure for authentication",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for creating module directories, implementing components, hooks, utilities, stores, entry point, type definitions, and documentation.",
+      "reasoning": "Modularizing authentication logic improves maintainability but requires careful organization and documentation."
+    },
+    {
+      "taskId": 22,
+      "taskTitle": "Implement module structure for tab screens",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating module directories, implementing tab components, utilities, hooks, entry point, type definitions, documentation, and shared utilities.",
+      "reasoning": "Tab module structure is similar in complexity to authentication, focusing on maintainability and code reuse."
+    },
+    {
+      "taskId": 23,
+      "taskTitle": "Create comprehensive README documentation",
+      "complexityScore": 4,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "List subtasks for creating the main README, installation instructions, usage examples, project structure docs, feature documentation, troubleshooting, contributing guidelines, and license.",
+      "reasoning": "Documentation is essential but mostly procedural, involving content creation and organization."
+    },
+    {
+      "taskId": 24,
+      "taskTitle": "Implement project testing setup",
+      "complexityScore": 5,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand into subtasks for installing testing dependencies, configuring Jest, setting up test files, writing example tests, creating utilities, mocking native modules, npm scripts, and documentation.",
+      "reasoning": "Testing setup is moderately complex due to configuration, mocking, and ensuring compatibility with the project structure."
+    },
+    {
+      "taskId": 25,
+      "taskTitle": "Create CI/CD configuration",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down into subtasks for creating CI workflows, testing/linting steps, npm publish, example workflows, EAS Build config, deployment, documentation, and version management.",
+      "reasoning": "CI/CD setup involves multiple workflows, integration with external services, and automation, making it moderately complex."
+    }
+  ]
+}
