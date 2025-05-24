@@ -1,0 +1,54 @@
+{
+  "name": "create-expo-spark",
+  "version": "1.0.0",
+  "description": "CLI tool to create Expo projects with pre-configured authentication, state management, and dark mode support",
+  "main": "bin/index.js",
+  "bin": {
+    "create-expo-spark": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node bin/index.js",
+    "link": "npm link",
+    "unlink": "npm unlink"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qkrwoghd04/expo-spark.git"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "cli",
+    "template",
+    "boilerplate",
+    "authentication",
+    "zustand",
+    "dark-mode",
+    "secure-store",
+    "expo-router"
+  ],
+  "author": "qkrwoghd04",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qkrwoghd04/expo-spark/issues"
+  },
+  "homepage": "https://github.com/qkrwoghd04/expo-spark#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "bin/",
+    "templates/",
+    "README.md"
+  ],
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^11.0.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.0"
+  }
+}

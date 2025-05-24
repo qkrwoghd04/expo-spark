@@ -28,4 +28,5 @@ node_modules/
 tasks.json
 tasks/ 
 
+.cursor/
 .cursor/mcp.json
