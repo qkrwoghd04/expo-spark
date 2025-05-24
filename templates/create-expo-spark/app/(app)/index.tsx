@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, useColorScheme, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, useColorScheme, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSession } from '../../ctx/useSession';
 
@@ -20,7 +20,7 @@ export default function Index() {
           This is a protected route that requires authentication.
         </Text>
         
-        <TouchableOpacity 
+        <Pressable 
           style={[styles.signOutButton, { backgroundColor: isDark ? '#333' : '#f0f0f0' }]}
           onPress={() => {
             // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
@@ -30,7 +30,7 @@ export default function Index() {
           <Text style={[styles.buttonText, { color: isDark ? '#fff' : '#000' }]}>
             Sign Out
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
