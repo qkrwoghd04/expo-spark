@@ -5,44 +5,207 @@ import {
   StyleSheet,
   useColorScheme,
   Pressable,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSession } from '../ctx/useSession';
+import { useState, useEffect } from 'react';
+import { useAuthStore } from '@/modules/auth/stores/authStore';
 
 export default function SignIn() {
-  const { signIn } = useSession();
+  const { login, signUp, isLoading, error, clearError } = useAuthStore();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+    name: '',
+  });
+
+  // 에러가 변경되면 Alert로 표시
+  useEffect(() => {
+    if (error) {
+      Alert.alert('오류', error, [
+        {
+          text: '확인',
+          onPress: clearError,
+        },
+      ]);
+    }
+  }, [error, clearError]);
+
+  const handleAuth = async () => {
+    if (!form.email.trim() || !form.password.trim()) {
+      Alert.alert('오류', '이메일과 비밀번호를 입력해주세요.');
+      return;
+    }
+
+    if (isSignUp && !form.name.trim()) {
+      Alert.alert('오류', '이름을 입력해주세요.');
+      return;
+    }
+
+    try {
+      if (isSignUp) {
+        await signUp({
+          email: form.email.trim(),
+          password: form.password.trim(),
+          name: form.name.trim(),
+        });
+        Alert.alert('성공', '회원가입이 완료되었습니다!', [
+          {
+            text: '확인',
+            onPress: () => router.dismiss(),
+          },
+        ]);
+      } else {
+        await login({
+          email: form.email.trim(),
+          password: form.password.trim(),
+        });
+        router.dismiss();
+      }
+    } catch (error) {
+      // 에러는 useEffect에서 처리됨
+      console.error('인증 오류:', error);
+    }
+  };
+
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp);
+    setForm({
+      email: '',
+      password: '',
+      name: '',
+    });
+    clearError(); // 모드 변경 시 에러 클리어
+  };
+
+  const isFormValid =
+    form.email.trim() &&
+    form.password.trim() &&
+    (!isSignUp || form.name.trim());
 
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}
     >
-      <View style={styles.content}>
-        <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
-          Welcome Back! 👋
-        </Text>
-        <Text style={[styles.subtitle, { color: isDark ? '#ccc' : '#666' }]}>
-          Sign in to access your account
-        </Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.flex}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.content}>
+            <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
+              {isSignUp ? '회원가입' : '로그인'} 👋
+            </Text>
+            <Text
+              style={[styles.subtitle, { color: isDark ? '#ccc' : '#666' }]}
+            >
+              {isSignUp ? '새 계정을 만들어주세요' : '계정에 로그인하세요'}
+            </Text>
 
-        <Pressable
-          style={[styles.signInButton, { backgroundColor: '#007AFF' }]}
-          onPress={() => {
-            signIn();
-            // Navigate after signing in. You may want to tweak this to ensure sign-in is
-            // successful before navigating.
-            router.dismiss();
-          }}
-        >
-          <Text style={styles.buttonText}>Sign In</Text>
-        </Pressable>
+            <View style={styles.formContainer}>
+              <TextInput
+                style={[
+                  styles.input,
+                  {
+                    backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5',
+                    color: isDark ? '#fff' : '#000',
+                    borderColor: isDark ? '#333' : '#ddd',
+                  },
+                ]}
+                placeholder="이메일"
+                placeholderTextColor={isDark ? '#888' : '#999'}
+                value={form.email}
+                onChangeText={(text) => setForm({ ...form, email: text })}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                editable={!isLoading}
+              />
 
-        <Text style={[styles.note, { color: isDark ? '#888' : '#999' }]}>
-          This is a demo sign-in. In a real app, you would implement proper
-          authentication.
-        </Text>
-      </View>
+              {isSignUp && (
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5',
+                      color: isDark ? '#fff' : '#000',
+                      borderColor: isDark ? '#333' : '#ddd',
+                    },
+                  ]}
+                  placeholder="이름"
+                  placeholderTextColor={isDark ? '#888' : '#999'}
+                  value={form.name}
+                  onChangeText={(text) => setForm({ ...form, name: text })}
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  editable={!isLoading}
+                />
+              )}
+
+              <TextInput
+                style={[
+                  styles.input,
+                  {
+                    backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5',
+                    color: isDark ? '#fff' : '#000',
+                    borderColor: isDark ? '#333' : '#ddd',
+                  },
+                ]}
+                placeholder="비밀번호"
+                placeholderTextColor={isDark ? '#888' : '#999'}
+                value={form.password}
+                onChangeText={(text) => setForm({ ...form, password: text })}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+                editable={!isLoading}
+              />
+
+              <Pressable
+                style={[
+                  styles.authButton,
+                  {
+                    backgroundColor:
+                      isFormValid && !isLoading ? '#007AFF' : '#999',
+                    opacity: isLoading ? 0.7 : 1,
+                  },
+                ]}
+                onPress={handleAuth}
+                disabled={!isFormValid || isLoading}
+              >
+                <Text style={styles.buttonText}>
+                  {isLoading ? '처리 중...' : isSignUp ? '회원가입' : '로그인'}
+                </Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.toggleButton}
+                onPress={toggleMode}
+                disabled={isLoading}
+              >
+                <Text style={[styles.toggleText, { color: '#007AFF' }]}>
+                  {isSignUp
+                    ? '이미 계정이 있으신가요? 로그인'
+                    : '계정이 없으신가요? 회원가입'}
+                </Text>
+              </Pressable>
+            </View>
+
+            <Text style={[styles.note, { color: isDark ? '#888' : '#999' }]}>
+              이것은 데모 인증입니다. 실제 앱에서는 적절한 보안 인증을
+              구현하세요.
+            </Text>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -51,11 +214,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  flex: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     paddingHorizontal: 40,
+    paddingVertical: 20,
   },
   title: {
     fontSize: 32,
@@ -68,22 +237,40 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 48,
   },
-  signInButton: {
+  formContainer: {
+    marginBottom: 32,
+  },
+  input: {
+    height: 50,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    fontSize: 16,
+  },
+  authButton: {
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 12,
-    minWidth: 200,
     alignItems: 'center',
+    marginBottom: 16,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: '600',
   },
+  toggleButton: {
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  toggleText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
   note: {
     fontSize: 12,
     textAlign: 'center',
-    marginTop: 32,
     lineHeight: 16,
   },
 });

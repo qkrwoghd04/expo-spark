@@ -1,45 +1,37 @@
-import { use, createContext, type PropsWithChildren } from 'react';
-import { useStorageState } from '@/hooks/useStorageState';
+import React, { type PropsWithChildren } from 'react';
+import { useAuthStore } from '@/modules/auth/stores/authStore';
 
-const AuthContext = createContext<{
-  signIn: () => void;
-  signOut: () => void;
-  session?: string | null;
-  isLoading: boolean;
-}>({
-  signIn: () => null,
-  signOut: () => null,
-  session: null,
-  isLoading: false,
-});
-
-// This hook can be used to access the user info.
+/**
+ * 인증 관련 정보와 액션을 제공하는 훅
+ */
 export function useSession() {
-  const value = use(AuthContext);
-  if (!value) {
-    throw new Error('useSession must be wrapped in a <SessionProvider />');
-  }
+  const { user, isAuthenticated, isLoading, error, login, logout, clearError } =
+    useAuthStore();
 
-  return value;
+  return {
+    // 상태
+    session: isAuthenticated ? user : null,
+    isLoading,
+    error,
+
+    // 액션 (간소화된 인터페이스)
+    signIn: async (email: string, password: string) => {
+      try {
+        await login({ email, password });
+      } catch (error) {
+        // 에러는 store에서 이미 설정되므로 여기서는 다시 던지기만
+        throw error;
+      }
+    },
+    signOut: logout,
+    clearError,
+  };
 }
 
+/**
+ * 세션 컨텍스트 프로바이더
+ * 현재는 Zustand로 상태를 관리하므로 단순히 children을 렌더링
+ */
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState('session');
-
-  return (
-    <AuthContext
-      value={{
-        signIn: () => {
-          // Perform sign-in logic here
-          setSession('user-session-token');
-        },
-        signOut: () => {
-          setSession(null);
-        },
-        session,
-        isLoading,
-      }}>
-      {children}
-    </AuthContext>
-  );
-} 
+  return <>{children}</>;
+}
