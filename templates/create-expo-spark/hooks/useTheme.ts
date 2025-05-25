@@ -3,7 +3,6 @@ import { Colors } from '@/constants/Colors';
 
 export function useTheme() {
   const colorScheme = useColorScheme();
-  console.log(colorScheme);
   const isDark = colorScheme === 'dark';
 
   return {

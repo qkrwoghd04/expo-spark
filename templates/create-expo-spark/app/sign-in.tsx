@@ -68,10 +68,9 @@ export default function SignIn() {
           email: form.email.trim(),
           password: form.password.trim(),
         });
-        router.dismiss();
+        router.replace('/(app)');
       }
     } catch (error) {
-      // 에러는 useEffect에서 처리됨
       console.error('인증 오류:', error);
     }
   };
@@ -174,7 +173,6 @@ export default function SignIn() {
                   isLoading ? '처리 중...' : isSignUp ? '회원가입' : '로그인'
                 }
                 onPress={handleAuth}
-                size="large"
                 disabled={!isFormValid || isLoading}
               />
 
