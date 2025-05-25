@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useTheme } from '@/hooks/useTheme';
+import LottieView from 'lottie-react-native';
 
 export default function TabLayout() {
   const { isDark } = useTheme();
@@ -22,14 +23,28 @@ export default function TabLayout() {
         name="index"
         options={{
           headerShown: false,
-          tabBarIcon: () => null, // You can add icons here
+          tabBarIcon: ({ color, size, focused }) => (
+            <LottieView
+              source={require('@/assets/lottie/home.json')}
+              autoPlay
+              loop={focused}
+              style={{ width: size, height: size }}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           headerShown: false,
-          tabBarIcon: () => null, // You can add icons here
+          tabBarIcon: ({ color, size, focused }) => (
+            <LottieView
+              source={require('@/assets/lottie/profile.json')}
+              autoPlay
+              loop={focused}
+              style={{ width: size, height: size }}
+            />
+          ),
         }}
       />
     </Tabs>

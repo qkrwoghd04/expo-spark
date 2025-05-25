@@ -47,9 +47,11 @@
     "prettier": "^3.5.3"
   },
   "dependencies": {
+    "@types/react-native": "^0.72.8",
     "chalk": "^4.1.2",
     "commander": "^14.0.0",
     "fs-extra": "^11.0.0",
-    "inquirer": "^8.2.0"
+    "inquirer": "^8.2.0",
+    "lottie-react-native": "^7.2.2"
   }
 }
