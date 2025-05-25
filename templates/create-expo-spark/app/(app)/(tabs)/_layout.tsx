@@ -21,14 +21,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          headerShown: false,
           tabBarIcon: () => null, // You can add icons here
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          headerShown: false,
           tabBarIcon: () => null, // You can add icons here
         }}
       />
