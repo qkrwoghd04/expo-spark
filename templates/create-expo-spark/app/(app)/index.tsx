@@ -1,10 +1,10 @@
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSession } from '@/ctx';
 import { useTheme } from '@/hooks/useTheme';
+import Button from '@/components/Button';
+import { router } from 'expo-router';
 
 export default function Index() {
-  const { signOut } = useSession();
   const { isDark } = useTheme();
 
   return (
@@ -22,22 +22,11 @@ export default function Index() {
           This is a protected route that requires authentication.
         </Text>
 
-        <Pressable
-          style={[
-            styles.signOutButton,
-            { backgroundColor: isDark ? '#333' : '#f0f0f0' },
-          ]}
-          onPress={() => {
-            // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-            signOut();
-          }}
-        >
-          <Text
-            style={[styles.buttonText, { color: isDark ? '#fff' : '#000' }]}
-          >
-            Sign Out
-          </Text>
-        </Pressable>
+        <Button
+          title="Start"
+          size="medium"
+          onPress={() => router.push('/(app)/(tabs)')}
+        />
       </View>
     </SafeAreaView>
   );
@@ -69,15 +58,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
     marginBottom: 32,
-  },
-  signOutButton: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

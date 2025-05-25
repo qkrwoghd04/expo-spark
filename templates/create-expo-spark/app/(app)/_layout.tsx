@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
-import { useSession } from '../../ctx/useSession';
+import { useSession } from '@/ctx/useSession';
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
