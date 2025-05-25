@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity,
+  Pressable,
   Text,
   StyleSheet,
   useColorScheme,
@@ -35,20 +35,38 @@ export default function Button({
 
   const getButtonStyle = (): ViewStyle[] => {
     const baseStyle: ViewStyle[] = [styles.button, styles[size]];
-    
+
     if (variant === 'primary') {
       baseStyle.push({
-        backgroundColor: disabled ? (isDark ? '#333' : '#ccc') : (isDark ? '#007AFF' : '#007AFF'),
+        backgroundColor: disabled
+          ? isDark
+            ? '#333'
+            : '#ccc'
+          : isDark
+            ? '#007AFF'
+            : '#007AFF',
       });
     } else if (variant === 'secondary') {
       baseStyle.push({
-        backgroundColor: disabled ? (isDark ? '#222' : '#f0f0f0') : (isDark ? '#333' : '#f0f0f0'),
+        backgroundColor: disabled
+          ? isDark
+            ? '#222'
+            : '#f0f0f0'
+          : isDark
+            ? '#333'
+            : '#f0f0f0',
       });
     } else if (variant === 'outline') {
       baseStyle.push({
         backgroundColor: 'transparent',
         borderWidth: 1,
-        borderColor: disabled ? (isDark ? '#333' : '#ccc') : (isDark ? '#007AFF' : '#007AFF'),
+        borderColor: disabled
+          ? isDark
+            ? '#333'
+            : '#ccc'
+          : isDark
+            ? '#007AFF'
+            : '#007AFF',
       });
     }
 
@@ -56,19 +74,28 @@ export default function Button({
   };
 
   const getTextStyle = (): TextStyle[] => {
-    const baseStyle: TextStyle[] = [styles.text, styles[`${size}Text` as keyof typeof styles]];
-    
+    const baseStyle: TextStyle[] = [
+      styles.text,
+      styles[`${size}Text` as keyof typeof styles],
+    ];
+
     if (variant === 'primary') {
       baseStyle.push({
         color: disabled ? (isDark ? '#666' : '#999') : '#fff',
       });
     } else if (variant === 'secondary') {
       baseStyle.push({
-        color: disabled ? (isDark ? '#666' : '#999') : (isDark ? '#fff' : '#000'),
+        color: disabled ? (isDark ? '#666' : '#999') : isDark ? '#fff' : '#000',
       });
     } else if (variant === 'outline') {
       baseStyle.push({
-        color: disabled ? (isDark ? '#666' : '#999') : (isDark ? '#007AFF' : '#007AFF'),
+        color: disabled
+          ? isDark
+            ? '#666'
+            : '#999'
+          : isDark
+            ? '#007AFF'
+            : '#007AFF',
       });
     }
 
@@ -76,27 +103,28 @@ export default function Button({
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={[getButtonStyle(), style]}
       onPress={onPress}
       disabled={disabled || loading}
-      activeOpacity={0.7}
     >
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' ? '#fff' : (isDark ? '#007AFF' : '#007AFF')}
+          color={
+            variant === 'primary' ? '#fff' : isDark ? '#007AFF' : '#007AFF'
+          }
         />
       ) : (
         <Text style={[getTextStyle(), textStyle]}>{title}</Text>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -128,4 +156,4 @@ const styles = StyleSheet.create({
   largeText: {
     fontSize: 18,
   },
-}); 
+});

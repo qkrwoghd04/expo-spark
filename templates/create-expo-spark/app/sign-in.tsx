@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  useColorScheme,
   Pressable,
   TextInput,
   Alert,
@@ -14,11 +13,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/modules/auth/stores/authStore';
+import { useTheme } from '@/hooks/useTheme';
+import Button from '@/components/Button';
 
 export default function SignIn() {
   const { login, signUp, isLoading, error, clearError } = useAuthStore();
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { isDark } = useTheme();
 
   const [isSignUp, setIsSignUp] = useState(false);
   const [form, setForm] = useState({
@@ -169,22 +169,14 @@ export default function SignIn() {
                 editable={!isLoading}
               />
 
-              <Pressable
-                style={[
-                  styles.authButton,
-                  {
-                    backgroundColor:
-                      isFormValid && !isLoading ? '#007AFF' : '#999',
-                    opacity: isLoading ? 0.7 : 1,
-                  },
-                ]}
+              <Button
+                title={
+                  isLoading ? '처리 중...' : isSignUp ? '회원가입' : '로그인'
+                }
                 onPress={handleAuth}
+                size="large"
                 disabled={!isFormValid || isLoading}
-              >
-                <Text style={styles.buttonText}>
-                  {isLoading ? '처리 중...' : isSignUp ? '회원가입' : '로그인'}
-                </Text>
-              </Pressable>
+              />
 
               <Pressable
                 style={styles.toggleButton}
@@ -247,18 +239,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderWidth: 1,
     fontSize: 16,
-  },
-  authButton: {
-    paddingHorizontal: 32,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
   },
   toggleButton: {
     alignItems: 'center',
