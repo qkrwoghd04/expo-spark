@@ -23,7 +23,7 @@ export default function TabLayout() {
         name="index"
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <LottieView
               source={require('@/assets/lottie/home.json')}
               autoPlay
@@ -37,7 +37,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <LottieView
               source={require('@/assets/lottie/profile.json')}
               autoPlay
