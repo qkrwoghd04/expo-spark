@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -15,10 +14,12 @@ import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/modules/auth/stores/authStore';
 import { useTheme } from '@/hooks/useTheme';
 import Button from '@/components/Button';
+import { useAlert } from '@/hooks/useAlert';
 
 export default function SignIn() {
   const { login, signUp, isLoading, error, clearError } = useAuthStore();
   const { isDark } = useTheme();
+  const { showSuccessAlert, showErrorAlert } = useAlert();
 
   const [isSignUp, setIsSignUp] = useState(false);
   const [form, setForm] = useState({
@@ -30,23 +31,18 @@ export default function SignIn() {
   // 에러가 변경되면 Alert로 표시
   useEffect(() => {
     if (error) {
-      Alert.alert('오류', error, [
-        {
-          text: '확인',
-          onPress: clearError,
-        },
-      ]);
+      showErrorAlert(error, clearError);
     }
-  }, [error, clearError]);
+  }, [error, clearError, showErrorAlert]);
 
   const handleAuth = async () => {
     if (!form.email.trim() || !form.password.trim()) {
-      Alert.alert('오류', '이메일과 비밀번호를 입력해주세요.');
+      showErrorAlert('이메일과 비밀번호를 입력해주세요.');
       return;
     }
 
     if (isSignUp && !form.name.trim()) {
-      Alert.alert('오류', '이름을 입력해주세요.');
+      showErrorAlert('이름을 입력해주세요.');
       return;
     }
 
@@ -57,12 +53,7 @@ export default function SignIn() {
           password: form.password.trim(),
           name: form.name.trim(),
         });
-        Alert.alert('성공', '회원가입이 완료되었습니다!', [
-          {
-            text: '확인',
-            onPress: () => router.dismiss(),
-          },
-        ]);
+        showSuccessAlert('회원가입이 완료되었습니다!', () => router.dismiss());
       } else {
         await login({
           email: form.email.trim(),
@@ -72,6 +63,7 @@ export default function SignIn() {
       }
     } catch (error) {
       console.error('인증 오류:', error);
+      showErrorAlert('인증 중 오류가 발생했습니다.');
     }
   };
 

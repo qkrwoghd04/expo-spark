@@ -47,8 +47,8 @@ export default function Root() {
 
   return (
     <SessionProvider>
-      <SplashScreenController />
-      <RootNavigator />
+        <SplashScreenController />
+        <RootNavigator />
     </SessionProvider>
   );
 }
